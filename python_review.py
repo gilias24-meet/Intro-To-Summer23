@@ -7,7 +7,7 @@ days_of_the_week=["Sunday","Monday","tuesday" "wednesday" "thursday" "friday" "s
 num=0
 for i in temperatures:
 	if i % 2==0:
-    num+1=num
+    num=1+num
 print(num)
 
 

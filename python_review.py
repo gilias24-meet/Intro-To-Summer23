@@ -9,7 +9,7 @@ for i in range(7):
 	even=[]
 	if i % 2==0:
 		even.append(i)
-		
+print(even)
 
 
 

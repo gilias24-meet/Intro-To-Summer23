@@ -1,2 +1,2 @@
 import random
-temperatures=[random.randrange(26, 41)]:
+temperatures=[6(random.randrange(26, 41))]:

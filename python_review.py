@@ -5,7 +5,7 @@ for i in range(7):
 print(temperatures)
 days_of_the_week=["Sunday","Monday","tuesday" "wednesday" "thursday" "friday" "saturday"]
 for i in range(7):
-    even=[]
+	even=[]
 	if i % 2==0:
 		even.append(i)
 print(even)

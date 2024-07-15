@@ -6,19 +6,23 @@ print(temperatures)
 
 days_of_the_week=["Sunday","Monday","tuesday" "wednesday" "thursday" "friday" "saturday"]
 good_days=0
+bad_days=0
 for i in temperatures:
 	if i % 2==0:
-		good_days=1+good_days
+		good_days+=1
+	
 print(good_days)
 
 high_temp=max(temperatures)
 low_temp=min(temperatures)
+print(high_temp)
+print(temperatures.index(high_temp))
 high_temp_day = days_of_the_week[temperatures.index(high_temp)]
 low_temp_day = days_of_the_week[temperatures.index(low_temp)]
 
 
- avg_temp = sum(temp) / len(temp)
- above_avg = [temperatures for temperatures if temperatures > avg_temp]
+avg_temp = sum(temperatures) / len(temperatures)
+# above_avg = [temperatures for temperatures if temperatures > avg_temp]
 
 
 

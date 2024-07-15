@@ -17,17 +17,11 @@ high_temp_day = days_of_the_week[temperatures.index(high_temp)]
 low_temp_day = days_of_the_week[temperatures.index(low_temp)]
 
 
-# avg_temp = sum(temp) / len(temp)
-# above_avg = [temperatures for temperatures if temperatures > avg_temp]
+ avg_temp = sum(temp) / len(temp)
+ above_avg = [temperatures for temperatures if temperatures > avg_temp]
 
 
 
-
-# the_index=temperatures.index(low_temp)
-# DL=days_of_the_week[the_index]
-# DH=days_of_the_week[temperatures.index(high_temp)]
-# print("high:", high_temp,DH)
-# print("low:", low_temp,DL)
 
 
 

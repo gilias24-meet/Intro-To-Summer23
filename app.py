@@ -75,7 +75,7 @@ def space1():
     <a href = "/space2">this is a link</a>
     </html>'''
 
-    @app.route('/space2')
+@app.route('/space2')
 def space2():
     return'''
     <html>
@@ -83,7 +83,7 @@ def space2():
     <a href = "/space3">this is a link</a>
     </html>'''
 
-    @app.route('/space3')
+@app.route('/space3')
 def space3():
     return'''
     <html>
@@ -91,14 +91,6 @@ def space3():
     <a href = "/space1">/space1</a>
     </html>'''
 
-
-
-
-
-
-
-
-
-    
+  
 if __name__ == '__main__':
     app.run(debug=True)

@@ -18,7 +18,7 @@ def add_comment(youtubevideo,username,comment_text):
 	youtubevideo["comments"][username] = comment_text
 	return youtubevideo
 
-#i didn't understand 6 + it did'nt run in terminal
+#i didn't understand 6 
 
 
 

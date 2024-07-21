@@ -1,64 +1,32 @@
 import random
-temperatures=[]
-for i in range(7):
-	temperatures.append(random.randint(26,40))
-print(temperatures)
+temperatures = [23,24,28,18,30,33,25]
+days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
-days_of_the_week=["Sunday","Monday","tuesday" "wednesday" "thursday" "friday" "saturday"]
-good_days=0
-bad_days=0
-for i in temperatures:
-	if i % 2==0:
-		good_days+=1
-	
-print(good_days)
+good_days = 0 
+bad_days = 0
+
+for temp in temperatures:
+	if temp % 2==0:
+		good_days +=1
+print('the amont of good days is:',good_days)
 
 high_temp=max(temperatures)
 low_temp=min(temperatures)
-print(high_temp)
-print(temperatures.index(high_temp))
-high_temp_day = days_of_the_week[temperatures.index(high_temp)]
-low_temp_day = days_of_the_week[temperatures.index(low_temp)]
+
+print('the highest temp is:',high_temp)
+print('the day of the highest temp is:',days[temperatures.index(high_temp)])
 
 
-avg_temp = sum(temperatures) / len(temperatures)
-# above_avg = [temperatures for temperatures if temperatures > avg_temp]
+print('the lowest temp is:',low_temp)
+print('the day of the lowest temp is:',days[temperatures.index(low_temp)])
 
 
+avg_temp = sum(temperatures)/len(temperatures)
+print('the average temp of the week:',avg_temp)
 
 
+above_avg = [temp for temp in temperatures  if temp > avg_temp]
+print('above average days:',above_avg)
 
-
-
-
-
-
-
-
-
-# high = 0
-# low=0
-# for i in range(7):
-# 	if temperatures[i] > temperatures[high]:
-# 		high=i
-
-# 	elif temperatures[i] < temperatures[low]:
-# 		low=i
-
-# # low_1=temperatures.index(low)
-# # print(low_1)
-
-# print("low:", low, days_of_the_week[low_1])
-
-# print("high:", high, days_of_the_week[high])
-
-
-
-
-
-
-
-
-
-
+print('the weeks temperatures:', temperatures)
 

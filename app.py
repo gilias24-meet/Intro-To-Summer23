@@ -1,96 +1,103 @@
-from flask import Flask
+from flask import Flask, render_template, request, url_for, redirect
+from flask import session as login_session
+import random
+import pyrebase
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
-@app.route('/home')
-def home():
-    return'''<html>
-    <h1>welcome!</h1>
-    <p>this is a photo galry</p>
-    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJpaWTviBwKxlBCAQujz_Jr3Fb2baDw7eRrg&s">
-    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREcUrcH8BpmbJ7JAN8h68R9CcGICB-hFnLPw&s">
-    <img src = "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*" >
-    <a href = "/food1">this is a link</a>
-    <a href = "/pet1">pet</a>
-    <a href = "/space1">space</a>
-    </html>'''
+                                    
+firebaseConfig = {
+  'apiKey': "AIzaSyAAL4ipnYtGe8RGsmH4VUgs5RYwgP64X_Y",
+  'authDomain': "giftapp-ad937.firebaseapp.com",
+  'databaseURL': "https://giftapp-ad937-default-rtdb.europe-west1.firebasedatabase.app",
+  'projectId': "giftapp-ad937",
+  'storageBucket': "giftapp-ad937.appspot.com",
+  'messagingSenderId': "904198728084",
+  'appId': "1:904198728084:web:05542fc6834719046fc781",
+  'measurementId': "G-G8HJ6XR7YP"
+}
+
+firebase = pyrebase.initialize_app(firebaseConfig) 
+auth = firebase.auth()
+db = firebase.database()
+
+app.config['SECRET_KEY'] = 'super-secret-key'
+
+@app.route('/', methods=['GET', 'POST'])
+def signup():
+  if request.method == "GET": 
+    return render_template("signup.html")
+  else:
+    try:
+      email = request.form["email"]
+      username = request.form['username']
+      passwored = request.form['passwored']
+      login_session["user"] = auth.create_user_with_email_and_password(email, passwored)
+      user = {'username': username, 'email':email, 'passwored':passwored }
+      UID = login_session["user"]['localId']
+      db.child("user").child(UID).set(user)
 
 
-@app.route('/food1')
-def food_1():
-    return'''
-    <html>
-    <img src = "https://media-cdn.tripadvisor.com/media/photo-s/17/9b/5e/5c/soshi-rolls.jpg">
-    <a href = "/home">home</a>
-    <a href = "/food2">food</a>
-    </html>'''
+      return render_template("home.html")
+    except Exception as e:
+      print(e)
+      return render_template("signup.html")
 
-@app.route('/food2')
-def food_2():
-    return'''
-    <html>
-    <img src = "https://lh4.googleusercontent.com/proxy/_HzODjbuNXBo7kt-3hLsJ33bdT0zVv8CNvqLNxGZeJTr8ndE67KtspSURfD5scHzsuZV4zoJGCY4sBel3mTvmhjD37ZCYnehKhHd4P9V_BndaecnW_h0pgMY7Jf0judh6QU">
-    <a href = "/food3">this is a link</a>
-    </html>'''
+@app.route('/login',methods=['GET', 'POST'])
+def login():
+  if request.method == "GET": 
+    return render_template("login.html")
 
-@app.route('/food3')
-def food_3():
-    return'''
-    <html>
-    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFCEc2WjXiOu7vFWstwAG3rFLQlxF0FeFdVw&s">
-    <a href = "/home">home</a>
-    </html>'''
+  else:
+    email = request.form["email"]
+    username = request.form['username']
+    passwored = request.form['passwored']
+    login_session["user"] = auth.sign_in_with_email_and_password(email, passwored)
 
-@app.route('/pet1')
-def food_3():
-    return'''
-    <html>
-    <img src = "https://www.humanesociety.org/sites/default/files/2019/03/rabbit-475261_0.jpg">
-    <a href = "/pet2">this is a link</a>
+    user = {'username': username, 'email':email, 'passwored':passwored }
+    UID = login_session["user"]['localId']
+      
+    db.child("user").child(UID).set(user)
 
-    </html>'''
-
-@app.route('/pet2')
-def food_3():
-    return'''
-    <html>
-    <img src = "https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg">
-    <a href = "/home">home</a>
-    <a href = "/pet3">this is a link</a>
-    </html>'''
-
-@app.route('/pet3')
-def food_3():
-    return'''
-    <html>
-    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT98wK4vTKvIm3q3V50bAl81vALllriVOOjmg&s">
-    </html>'''
-
-@app.route('/space1')
-def space1():
-    return'''
-    <html>
-    <img src = "https://cdn.mos.cms.futurecdn.net/2oNNWzMiyntgoVjmedmpdn.jpg">
-    <a href = "/home">home</a>
-    <a href = "/space2">this is a link</a>
-    </html>'''
-
-@app.route('/space2')
-def space2():
-    return'''
-    <html>
-    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPevZcapaw0UrpzSfbp6baVvcO2CFtGalb9w&s">
-    <a href = "/space3">this is a link</a>
-    </html>'''
-
-@app.route('/space3')
-def space3():
-    return'''
-    <html>
-    <img src = "https://i.guim.co.uk/img/media/89b64eb2db109a9e7d4f0050fea63dcdb71c9069/0_256_3840_2304/master/3840.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=f3485c5a6759de6a08b39ccd2304fdb0">
-    <a href = "/space1">/space1</a>
-    </html>'''
-
+    return render_template("home.html")
   
+@app.route('/home', methods = ['GET','POST'])
+def home():
+   return render_template("home.html")
+
+@app.route('/food', methods = ['GET','POST'])
+def food():
+   return render_template("food.html")
+
+
+@app.route('/your_idea', methods = ['GET','POST'])
+def your_idea():
+  if request.method == "POST":
+    print("dffddf")
+    story = request.form["story"]  
+    db.child("stories").push(story)
+    return redirect(url_for("story"))
+  return render_template("your_idea.html")
+
+@app.route('/clothes', methods = ['GET','POST'])
+def clothes():
+  return render_template("clothes.html")
+
+@app.route('/wrappers', methods = ['GET','POST'])
+def wrappers():
+   return render_template("wrappers.html")
+
+@app.route('/creative', methods = ['GET','POST'])
+def creative():
+   return render_template("creative.html")
+
+@app.route('/story', methods=['GET', 'POST'])
+def story():
+  stories = db.child('stories').get().val()
+  return render_template("story.html", story=stories)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+  app.run(debug = True, port='2000')
+
+
+

@@ -1,8 +1,10 @@
+from flask import Flask
 from flask import Flask, render_template, request, url_for, redirect
 from flask import session as login_session
 import random
 import pyrebase
 
+app = Flask(__name__)
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
                                     
@@ -97,7 +99,6 @@ def story():
   return render_template("story.html", story=stories)
 
 if __name__ == '__main__':
-  app.run(debug = True, port='2000')
-
+    app.run(debug = True, port='2000')
 
 
